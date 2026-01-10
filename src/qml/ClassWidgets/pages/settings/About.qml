@@ -71,7 +71,7 @@ FluentPage {
         SettingExpander {
             Layout.fillWidth: true
             title: qsTr("Class Widgets 2")
-            description: qsTr("© 2024-2026 RinLit. All rights reserved \nLicensed under the MIT license")
+            description: qsTr("© 2024-2026 hmx. All rights reserved \nLicensed under the MIT license")
             icon.source: PathManager.images("logo.png")
             icon.size: 28
 
@@ -93,7 +93,7 @@ FluentPage {
                 TextInput {
                     id: repoUrl
                     readOnly: true
-                    text: "https://github.com/RinLit-233-shiroko/Class-Widgets-2"
+                    text: "https://github.com/hmx12345/Class-Widgets-2"
                     wrapMode: TextInput.Wrap
                 }
                 ToolButton {
