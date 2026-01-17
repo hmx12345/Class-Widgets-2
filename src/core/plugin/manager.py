@@ -7,7 +7,7 @@ from typing import List, Dict
 
 from PySide6.QtCore import Slot, QObject, Signal, Property, QUrl, QThread
 from PySide6.QtGui import QDesktopServices
-from PySide6.QtWidgets import QFileDialog
+from PySide6.QtWidgets import QApplication, QFileDialog
 from loguru import logger
 
 from src.core.directories import PLUGINS_PATH
@@ -43,9 +43,8 @@ class PluginManager(QObject):
         # 创建 PluginLoader 实例
         self.loader = PluginLoader(plugin_api, self.external_path)
 
-        # 扫描并初始化
-        self.scan()
-        logger.info(f"Found {len(self.metas)} plugins.")
+        # 扫描并初始化（延迟到翻译器加载之后）
+        # self.scan()
         logger.info("Plugin Manager initialized.")
         self.initialized.emit()
 
@@ -80,11 +79,11 @@ class PluginManager(QObject):
             notification = NotificationData(
                 provider_id="com.classwidgets.plugins",
                 level=NotificationLevel.WARNING,
-                title=f"检测到 {plugin_count} 个不兼容插件",
-                message=f"当前有 {plugin_count} 个不兼容插件已被加载，可能导致未知问题。请打开\"设置\"->\"插件\"了解更多。\n\n不兼容插件：{', '.join(plugin_names)}",
-                duration=8000,  # 显示8秒
+                title=QApplication.translate("PluginManager", "Incompatible"),
+                message=QApplication.translate("PluginManager", "{count} incompatible plugin(s) have been loaded, which may cause unknown issues.").format(count=plugin_count),
+                duration=10000,
                 closable=True,
-                silent=False
+                silent=True
             )
             
             # 使用app_central的notification发送通知
