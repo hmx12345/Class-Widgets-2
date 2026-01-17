@@ -71,7 +71,7 @@ FluentPage {
         SettingExpander {
             Layout.fillWidth: true
             title: qsTr("Class Widgets 2")
-            description: qsTr("© 2024-2026 hmx. All rights reserved \nLicensed under the MIT license")
+            description: qsTr("© 2024-2026 hmx234. All rights reserved \nLicensed under the MIT license")
             icon.source: PathManager.images("logo.png")
             icon.size: 28
 
