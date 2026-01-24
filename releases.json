@@ -1,0 +1,14 @@
+{
+  "release": {
+    "version": "main",
+    "url": {
+      "windows": "https://github.com/hmx12345/Class-Widgets-2/releases/download/main/ClassWidgets-2-Windows.zip"
+    }
+  },
+  "alpha": {
+    "version": "main",
+    "url": {
+      "windows": "https://github.com/hmx12345/Class-Widgets-2/releases/download/main/ClassWidgets-2-Windows.zip"
+    }
+  }
+}
