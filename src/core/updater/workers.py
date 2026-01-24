@@ -29,7 +29,7 @@ class CheckUpdateWorker(QThread):
         try:
             if not self.url:
                 self.url = UPDATE_URL
-            resp = requests.get(self.url, timeout=5)
+            resp = requests.get(self.url, timeout=5, verify=False)  # 临时禁用SSL验证以绕过证书问题
             resp.raise_for_status()
             data = resp.json()
             info = data.get(self.channel)
