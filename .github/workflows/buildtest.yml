@@ -88,95 +88,60 @@ jobs:
         run: |
           Compress-Archive -Path "dist/Class Widgets 2/*" -DestinationPath "dist/ClassWidgets-2-Windows.zip"
 
-      - name: 📦 Build Windows Installer (NSIS)
+      - name: 📦 Build Windows Installer (Inno Setup)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          # Install NSIS
-          choco install nsis -y
+          # Install Inno Setup
+          choco install innosetup -y
 
-          # Create NSIS script
-          $nsisScript = @"
-          !include "MUI2.nsh"
-          !define APPNAME "Class Widgets 2"
-          !define COMPANYNAME "Your Company"
-          !define DESCRIPTION "A description of your app"
-          !define VERSIONMAJOR 2
-          !define VERSIONMINOR 1
-          !define VERSIONBUILD 0
-          !define HELPURL "http://..."
-          !define UPDATEURL "http://..."
-          !define ABOUTURL "http://..."
-          !define INSTALLSIZE 50000
+          # Create Inno Setup script
+          $issScript = @"
+          #define MyAppName "Class Widgets 2"
+          #define MyAppVersion "2.1.0"
+          #define MyAppPublisher "Your Company"
+          #define MyAppURL "http://..."
+          #define MyAppExeName "Class Widgets 2.exe"
 
-          RequestExecutionLevel admin
-          InstallDir "`$PROGRAMFILES\`$APPNAME"
-          InstallDirRegKey HKCU "Software\`$APPNAME" ""
-          Name "`$APPNAME"
-          outFile "ClassWidgets-2-Windows-Installer.exe"
+          [Setup]
+          AppId={{ClassWidgets2}
+          AppName={#MyAppName}
+          AppVersion={#MyAppVersion}
+          AppPublisher={#MyAppPublisher}
+          AppPublisherURL={#MyAppURL}
+          AppSupportURL={#MyAppURL}
+          AppUpdatesURL={#MyAppURL}
+          DefaultDirName={pf}\{#MyAppName}
+          DisableProgramGroupPage=yes
+          OutputBaseFilename=ClassWidgets-2-Windows-Installer
+          SetupIconFile=assets\images\logo.ico
+          Compression=lzma
+          SolidCompression=yes
 
-          !insertmacro MUI_PAGE_WELCOME
-          !insertmacro MUI_PAGE_DIRECTORY
-          !insertmacro MUI_PAGE_INSTFILES
-          !insertmacro MUI_PAGE_FINISH
+          [Languages]
+          Name: "english"; MessagesFile: "compiler:Default.isl"
 
-          !insertmacro MUI_UNPAGE_WELCOME
-          !insertmacro MUI_UNPAGE_CONFIRM
-          !insertmacro MUI_UNPAGE_INSTFILES
-          !insertmacro MUI_UNPAGE_FINISH
+          [Tasks]
+          Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
-          !insertmacro MUI_LANGUAGE "English"
+          [Files]
+          Source: "dist\Class Widgets 2\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
-          section "install"
-              # Files for the install directory - to build the installer, these should be in the same directory as the install script (this file)
-              setOutPath `$INSTDIR
-              file /r "dist/Class Widgets 2/*"
+          [Icons]
+          Name: "{commonprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+          Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
-              # Uninstaller - See function un.onInit and section "uninstall" for configuration
-              writeUninstaller "`$INSTDIR\uninstall.exe"
-
-              # Registry information for add/remove programs
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "DisplayName" "`$APPNAME"
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "UninstallString" "`$\`"`$INSTDIR\uninstall.exe`$`""
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "QuietUninstallString" "`$\`"`$INSTDIR\uninstall.exe`$`" /S"
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "InstallLocation" "`$\`"`$INSTDIR`$`""
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "DisplayIcon" "`$\`"`$INSTDIR\Class Widgets 2.exe`$`""
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "Publisher" "`$COMPANYNAME"
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "HelpLink" "`$HELPURL"
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "URLUpdateInfo" "`$UPDATEURL"
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "URLInfoAbout" "`$ABOUTURL"
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "DisplayVersion" "`$VERSIONMAJOR.`$VERSIONMINOR.`$VERSIONBUILD"
-              WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "VersionMajor" `$VERSIONMAJOR
-              WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "VersionMinor" `$VERSIONMINOR
-              WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "NoModify" 1
-              WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "NoRepair" 1
-              WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "EstimatedSize" `$INSTALLSIZE
-
-              # Create desktop shortcut
-              createShortCut "`$DESKTOP\`$APPNAME.lnk" "`$INSTDIR\Class Widgets 2.exe" "" "`$INSTDIR\Class Widgets 2.exe"
-
-              # Create start-menu entries
-              createDirectory "`$SMPROGRAMS\`$APPNAME"
-              createShortCut "`$SMPROGRAMS\`$APPNAME\`$APPNAME.lnk" "`$INSTDIR\Class Widgets 2.exe" "" "`$INSTDIR\Class Widgets 2.exe"
-              createShortCut "`$SMPROGRAMS\`$APPNAME\Uninstall `$APPNAME.lnk" "`$INSTDIR\uninstall.exe" "" "`$INSTDIR\uninstall.exe"
-          sectionEnd
-
-          # Uninstaller
-          section "uninstall"
-              delete "`$DESKTOP\`$APPNAME.lnk"
-              rmDir /r "`$SMPROGRAMS\`$APPNAME"
-              rmDir /r "`$INSTDIR"
-              DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME"
-          sectionEnd
+          [Run]
+          Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
           "@
 
-          $nsisScript | Out-File -FilePath "installer.nsi" -Encoding UTF8
+          $issScript | Out-File -FilePath "installer.iss" -Encoding UTF8
 
-          # Run makensis to build the installer
-          & "C:\Program Files (x86)\NSIS\makensis.exe" "installer.nsi"
+          # Run Inno Setup compiler
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "installer.iss"
 
           # Move the installer to dist
-          Move-Item "ClassWidgets-2-Windows-Installer.exe" "dist/ClassWidgets-2-Windows-Installer.exe"
+          Move-Item "Output\ClassWidgets-2-Windows-Installer.exe" "dist\ClassWidgets-2-Windows-Installer.exe"
 
       - name: 📦 Zip build (macOS)
         if: runner.os == 'macOS'
