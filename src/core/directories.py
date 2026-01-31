@@ -10,7 +10,7 @@ ASSETS_PATH = SRC_PATH.parent / "assets"
 QML_PATH = SRC_PATH / "qml"
 CW_PATH = QML_PATH / "ClassWidgets"
 # DEFAULT_THEME = SRC_PATH / "themes" / "com.classwidgets.theme.default"
-DEFAULT_THEME = CW_PATH / "themes" / "default"
+DEFAULT_THEME = CW_PATH / "theme" / "default"
 
 CONFIGS_PATH = ROOT_PATH / "configs"
 SCHEDULES_PATH = CONFIGS_PATH / "schedules"
