@@ -110,9 +110,9 @@ jobs:
           !define INSTALLSIZE 50000
 
           RequestExecutionLevel admin
-          InstallDir "$PROGRAMFILES\${APPNAME}"
-          InstallDirRegKey HKCU "Software\${APPNAME}" ""
-          Name "${APPNAME}"
+          InstallDir "`$PROGRAMFILES\`$APPNAME"
+          InstallDirRegKey HKCU "Software\`$APPNAME" ""
+          Name "`$APPNAME"
           outFile "ClassWidgets-2-Windows-Installer.exe"
 
           !insertmacro MUI_PAGE_WELCOME
@@ -129,44 +129,44 @@ jobs:
 
           section "install"
               # Files for the install directory - to build the installer, these should be in the same directory as the install script (this file)
-              setOutPath $INSTDIR
+              setOutPath `$INSTDIR
               file /r "dist/Class Widgets 2/*"
 
               # Uninstaller - See function un.onInit and section "uninstall" for configuration
-              writeUninstaller "$INSTDIR\uninstall.exe"
+              writeUninstaller "`$INSTDIR\uninstall.exe"
 
               # Registry information for add/remove programs
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME}"
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "QuietUninstallString" "$\"$INSTDIR\uninstall.exe$\" /S"
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "InstallLocation" "$\"$INSTDIR$\""
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayIcon" "$\"$INSTDIR\Class Widgets 2.exe$\""
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "Publisher" "${COMPANYNAME}"
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "HelpLink" "${HELPURL}"
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "URLUpdateInfo" "${UPDATEURL}"
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "URLInfoAbout" "${ABOUTURL}"
-              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayVersion" "${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}"
-              WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "VersionMajor" ${VERSIONMAJOR}
-              WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "VersionMinor" ${VERSIONMINOR}
-              WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "NoModify" 1
-              WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "NoRepair" 1
-              WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "EstimatedSize" ${INSTALLSIZE}
+              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "DisplayName" "`$APPNAME"
+              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "UninstallString" "`$\`"`$INSTDIR\uninstall.exe`$`""
+              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "QuietUninstallString" "`$\`"`$INSTDIR\uninstall.exe`$`" /S"
+              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "InstallLocation" "`$\`"`$INSTDIR`$`""
+              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "DisplayIcon" "`$\`"`$INSTDIR\Class Widgets 2.exe`$`""
+              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "Publisher" "`$COMPANYNAME"
+              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "HelpLink" "`$HELPURL"
+              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "URLUpdateInfo" "`$UPDATEURL"
+              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "URLInfoAbout" "`$ABOUTURL"
+              WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "DisplayVersion" "`$VERSIONMAJOR.`$VERSIONMINOR.`$VERSIONBUILD"
+              WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "VersionMajor" `$VERSIONMAJOR
+              WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "VersionMinor" `$VERSIONMINOR
+              WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "NoModify" 1
+              WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "NoRepair" 1
+              WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME" "EstimatedSize" `$INSTALLSIZE
 
               # Create desktop shortcut
-              createShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\Class Widgets 2.exe" "" "$INSTDIR\Class Widgets 2.exe"
+              createShortCut "`$DESKTOP\`$APPNAME.lnk" "`$INSTDIR\Class Widgets 2.exe" "" "`$INSTDIR\Class Widgets 2.exe"
 
               # Create start-menu entries
-              createDirectory "$SMPROGRAMS\${APPNAME}"
-              createShortCut "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk" "$INSTDIR\Class Widgets 2.exe" "" "$INSTDIR\Class Widgets 2.exe"
-              createShortCut "$SMPROGRAMS\${APPNAME}\Uninstall ${APPNAME}.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe"
+              createDirectory "`$SMPROGRAMS\`$APPNAME"
+              createShortCut "`$SMPROGRAMS\`$APPNAME\`$APPNAME.lnk" "`$INSTDIR\Class Widgets 2.exe" "" "`$INSTDIR\Class Widgets 2.exe"
+              createShortCut "`$SMPROGRAMS\`$APPNAME\Uninstall `$APPNAME.lnk" "`$INSTDIR\uninstall.exe" "" "`$INSTDIR\uninstall.exe"
           sectionEnd
 
           # Uninstaller
           section "uninstall"
-              delete "$DESKTOP\${APPNAME}.lnk"
-              rmDir /r "$SMPROGRAMS\${APPNAME}"
-              rmDir /r "$INSTDIR"
-              DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
+              delete "`$DESKTOP\`$APPNAME.lnk"
+              rmDir /r "`$SMPROGRAMS\`$APPNAME"
+              rmDir /r "`$INSTDIR"
+              DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\`$APPNAME"
           sectionEnd
           "@
 
