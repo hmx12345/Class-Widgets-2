@@ -88,61 +88,6 @@ jobs:
         run: |
           Compress-Archive -Path "dist/Class Widgets 2/*" -DestinationPath "dist/ClassWidgets-2-Windows.zip"
 
-      - name: 📦 Build Windows Installer (Inno Setup)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          # Install Inno Setup
-          choco install innosetup -y
-
-          # Create Inno Setup script
-          $issScript = @"
-          #define MyAppName "Class Widgets 2"
-          #define MyAppVersion "2.1.0"
-          #define MyAppPublisher "Your Company"
-          #define MyAppURL "http://..."
-          #define MyAppExeName "Class Widgets 2.exe"
-
-          [Setup]
-          AppId={{ClassWidgets2}
-          AppName={#MyAppName}
-          AppVersion={#MyAppVersion}
-          AppPublisher={#MyAppPublisher}
-          AppPublisherURL={#MyAppURL}
-          AppSupportURL={#MyAppURL}
-          AppUpdatesURL={#MyAppURL}
-          DefaultDirName={pf}\{#MyAppName}
-          DisableProgramGroupPage=yes
-          OutputBaseFilename=ClassWidgets-2-Windows-Installer
-          SetupIconFile=assets\images\logo.ico
-          Compression=lzma
-          SolidCompression=yes
-
-          [Languages]
-          Name: "english"; MessagesFile: "compiler:Default.isl"
-
-          [Tasks]
-          Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-
-          [Files]
-          Source: "dist\Class Widgets 2\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-
-          [Icons]
-          Name: "{commonprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-          Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
-
-          [Run]
-          Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
-          "@
-
-          $issScript | Out-File -FilePath "installer.iss" -Encoding UTF8
-
-          # Run Inno Setup compiler
-          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "installer.iss"
-
-          # Move the installer to dist
-          Move-Item "Output\ClassWidgets-2-Windows-Installer.exe" "dist\ClassWidgets-2-Windows-Installer.exe"
-
       - name: 📦 Zip build (macOS)
         if: runner.os == 'macOS'
         shell: bash
@@ -154,9 +99,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ClassWidgets-2-Windows
-          path: |
-            dist/ClassWidgets-2-Windows.zip
-            dist/ClassWidgets-2-Windows-Installer.exe
+          path: dist/ClassWidgets-2-Windows.zip
 
       - name: ☁️ Upload artifact (macOS)
         if: runner.os == 'macOS'
@@ -199,7 +142,6 @@ jobs:
           prerelease: ${{ github.event_name == 'push' || github.event.inputs.prerelease }}
           files: |
             dist/ClassWidgets-2-Windows.zip
-            dist/ClassWidgets-2-Windows-Installer.exe
             dist/ClassWidgets-2-macOS-X64.dmg
             dist/ClassWidgets-2-macOS-ARM64.dmg
         env:
@@ -213,15 +155,13 @@ jobs:
             "release": {
               "version": "${VERSION}",
               "url": {
-                "windows": "https://github.com/hmx12345/Class-Widgets-2/releases/download/main/ClassWidgets-2-Windows.zip",
-                "installer": "https://github.com/hmx12345/Class-Widgets-2/releases/download/main/ClassWidgets-2-Windows-Installer.exe"
+                "windows": "https://github.com/hmx12345/Class-Widgets-2/releases/download/main/ClassWidgets-2-Windows.zip"
               }
             },
             "alpha": {
               "version": "${VERSION}",
               "url": {
-                "windows": "https://github.com/hmx12345/Class-Widgets-2/releases/download/main/ClassWidgets-2-Windows.zip",
-                "installer": "https://github.com/hmx12345/Class-Widgets-2/releases/download/main/ClassWidgets-2-Windows-Installer.exe"
+                "windows": "https://github.com/hmx12345/Class-Widgets-2/releases/download/main/ClassWidgets-2-Windows.zip"
               }
             }
           }
