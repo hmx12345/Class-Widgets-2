@@ -4,7 +4,7 @@
         "no_logs": false,
         "version": "2.0.0.dev20260111",
         "channel": "alpha",
-        "tutorial_completed": true,
+        "tutorial_completed": false,
         "auto_startup": false
     },
     "locale": {
@@ -22,7 +22,7 @@
         "reschedule_day": {}
     },
     "preferences": {
-        "current_theme": "default",
+        "current_theme": "file:///D:/%E5%A4%A9%E6%96%87/%E7%BC%96%E7%A8%8B%E4%BD%9C%E5%93%81/classwidgets2/cw2/Class-Widgets-2/src/qml/ClassWidgets/themes/default",
         "scale_factor": 1.0,
         "opacity": 1.0,
         "widgets_anchor": "top_center",
@@ -52,13 +52,13 @@
             ]
         },
         "current_preset": "default",
-        "font": "Microsoft YaHei",
+        "font": "",
         "font_weight": 600
     },
     "interactions": {
         "hover_fade": false,
         "hide": {
-            "state": true,
+            "state": false,
             "in_class": false,
             "clicked": true,
             "maximized": false,
@@ -87,13 +87,7 @@
         "enabled": true,
         "default_sound": null,
         "volume": 0.7,
-        "providers": {
-            "com.classwidgets.schedule.runtime.class": {
-                "enabled": true,
-                "use_system_notify": false,
-                "use_app_notify": true
-            }
-        },
+        "providers": {},
         "level_sounds": {
             "0": "",
             "1": "",
