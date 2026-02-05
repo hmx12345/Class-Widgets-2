@@ -1,0 +1,16 @@
+{
+  "release": {
+    "version": "2.0.0.dev20260131",
+    "url": {
+      "windows": "https://github.com/hmx12345/Class-Widgets-2/releases/download/main/ClassWidgets-2-Windows.zip",
+      "installer": "https://github.com/hmx12345/Class-Widgets-2/releases/download/main/ClassWidgets-2-Windows-Installer.exe"
+    }
+  },
+  "alpha": {
+    "version": "2.0.0.dev20260131",
+    "url": {
+      "windows": "https://github.com/hmx12345/Class-Widgets-2/releases/download/main/ClassWidgets-2-Windows.zip",
+      "installer": "https://github.com/hmx12345/Class-Widgets-2/releases/download/main/ClassWidgets-2-Windows-Installer.exe"
+    }
+  }
+}
