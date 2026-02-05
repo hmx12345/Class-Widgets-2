@@ -4,7 +4,7 @@
         "no_logs": false,
         "version": "2.0.0.dev20260111",
         "channel": "alpha",
-        "tutorial_completed": false,
+        "tutorial_completed": true,
         "auto_startup": false
     },
     "locale": {
@@ -22,7 +22,7 @@
         "reschedule_day": {}
     },
     "preferences": {
-        "current_theme": "file:///D:/%E5%A4%A9%E6%96%87/%E7%BC%96%E7%A8%8B%E4%BD%9C%E5%93%81/classwidgets2/cw2/Class-Widgets-2/src/qml/ClassWidgets/themes/default",
+        "current_theme": "default",
         "scale_factor": 1.0,
         "opacity": 1.0,
         "widgets_anchor": "top_center",
@@ -58,7 +58,7 @@
     "interactions": {
         "hover_fade": false,
         "hide": {
-            "state": false,
+            "state": true,
             "in_class": false,
             "clicked": true,
             "maximized": false,

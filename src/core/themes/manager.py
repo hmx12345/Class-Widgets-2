@@ -36,6 +36,9 @@ class ThemeManager(QObject):
 
         self.loader = ThemeLoader()
         
+        # Expose DEFAULT_THEME_ID on the instance for external callers
+        # (some modules access theme_manager.DEFAULT_THEME_ID)
+        self.DEFAULT_THEME_ID = DEFAULT_THEME_ID
         
         # 连接到 retranslate 信号
         # app_central.retranslate.connect(self._on_retranslate)
