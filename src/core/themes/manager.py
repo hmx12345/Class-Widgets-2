@@ -36,6 +36,7 @@ class ThemeManager(QObject):
 
         self.loader = ThemeLoader()
         
+        
         # 连接到 retranslate 信号
         # app_central.retranslate.connect(self._on_retranslate)
         # self.scan()

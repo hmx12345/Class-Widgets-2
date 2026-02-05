@@ -137,7 +137,7 @@ FluentPage {
                     icon: Theme.isDark() ? PathManager.images("icons/github_light.svg")
                                             : PathManager.images("icons/github.svg"),
                     title: qsTr("GitHub"),
-                    url: "https://github.com/RinLit-233-shiroko/Class-Widgets-2/issues"
+                    url: "https://github.com/hmx12345/Class-Widgets-2/"
                 },
                 {
                     icon: "ic_fluent_chat_help_20_filled",
