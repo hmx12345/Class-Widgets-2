@@ -18,7 +18,7 @@ from packaging.specifiers import SpecifierSet
 from PySide6.QtCore import QUrl, QCoreApplication
 from loguru import logger
 
-from src.core.directories import THEMES_PATH, CW_PATH, SRC_PATH
+from src.core.directories import THEMES_PATH
 from src.themes import BUILTIN_THEMES
 
 APP_API_VERSION = "2.0.0"
@@ -57,10 +57,8 @@ class ThemeLoader:
             meta["_type"] = "builtin"
             
             # Determine theme path
-            if meta["id"] == "default":
-                theme_path = CW_PATH / "theme"
-            else:
-                theme_path = SRC_PATH / "themes" / meta["id"]
+            theme_root = Path(__file__).resolve().parents[2] / "themes"
+            theme_path = theme_root / meta["id"]
             if not theme_path.exists():
                 plus_path = theme_root / meta['id']
                 if plus_path.exists():

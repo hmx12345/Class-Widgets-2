@@ -2,7 +2,7 @@
     "app": {
         "debug_mode": false,
         "no_logs": false,
-        "version": "2.0.0.dev20260124",
+        "version": "2.0.0.dev20260111",
         "channel": "alpha",
         "tutorial_completed": true,
         "auto_startup": false

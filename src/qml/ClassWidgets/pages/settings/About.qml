@@ -93,7 +93,7 @@ FluentPage {
                 TextInput {
                     id: repoUrl
                     readOnly: true
-                    text: "https://github.com/hmx12345/Class-Widgets-2"
+                    text: "https://github.com/RinLit-233-shiroko/Class-Widgets-2"
                     wrapMode: TextInput.Wrap
                 }
                 ToolButton {
